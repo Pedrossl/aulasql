@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comandos SQL - Hacker View</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #0f0;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            text-shadow: 0 0 10px #0f0;
+        }
+
+        select {
+            width: 100%;
+            max-width: 300px;
+            margin: 20px auto;
+            display: block;
+            background: #111;
+            border: 1px solid #0f0;
+            color: #0f0;
+            padding: 10px;
+        }
+
+        .terminal {
+            background-color: #111;
+            border: 1px solid #0f0;
+            border-radius: 8px;
+            padding: 20px;
+            white-space: pre-wrap;
+            box-shadow: 0 0 10px #0f0;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>💻 Comandos SQL</h1>
+
+    <select id="filtro" onchange="filtrarComandos()">
+        <option value="estrutura">Tabelas Mestras</option>
+        <option value="mostrarTabelas">Mostrar Tabelas</option>
+        <option value="insercao">Inserção de Dados</option>
+        <option value="query">Queries</option>
+        <option value="tudo">Tudo</option>
+    </select>
+
+    <div class="terminal" id="terminal"></div>
+
+    <script>
+        const terminal = document.getElementById("terminal");
+
+        const comandos = {
+            mostrarTabelas: `-- Mostrar apenas os nomes das tabelas
+SHOW TABLES;`,
+
+            estrutura: `-- Criar o banco de dados
+CREATE DATABASE IF NOT EXISTS jogos_bons;
+
+-- Usar o banco
+USE jogos_bons;
+
+-- Tabelas
+CREATE TABLE IF NOT EXISTS categoria (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  nome VARCHAR(45) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS jogo (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  nome VARCHAR(45) NOT NULL,
+  qtd INT NOT NULL,
+  categoria_id INT NOT NULL,
+  FOREIGN KEY (categoria_id) REFERENCES categoria(id)
+);
+
+CREATE TABLE IF NOT EXISTS funcionario (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  nome VARCHAR(40) NOT NULL,
+  telefone VARCHAR(20) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS cliente (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  nome VARCHAR(40) NOT NULL,
+  cpf VARCHAR(20) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS venda (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  cliente_id INT NOT NULL,
+  jogo_id INT NOT NULL,
+  funcionario_id INT NOT NULL,
+  qtd INT DEFAULT 1,
+  FOREIGN KEY (cliente_id) REFERENCES cliente(id),
+  FOREIGN KEY (jogo_id) REFERENCES jogo(id),
+  FOREIGN KEY (funcionario_id) REFERENCES funcionario(id)
+);`,
+
+            insercao: `-- Inserir categorias
+INSERT INTO categoria (nome) VALUES ('Terror'), ('Ação'), ('Aventura'), ('Estratégia'), ('RPG'), ('Puzzle'), ('MOBA');
+
+-- Inserir jogos
+INSERT INTO jogo (nome, qtd, categoria_id) VALUES
+('Bloodborne', 8, 1),
+('God of War', 12, 2),
+('Zelda: Breath of the Wild', 7, 3),
+('Civilization VI', 5, 4),
+('Elden Ring', 10, 5),
+('Portal 2', 6, 6),
+('League of Legends', 15, 7);
+
+-- Inserir funcionários
+INSERT INTO funcionario (nome, telefone) VALUES
+('Carlos Mendes', '+55(11)91234-5678'),
+('Ana Paula', '+55(21)99876-5432'),
+('Rodrigo Lima', '+55(31)98765-4321');
+
+-- Inserir clientes
+INSERT INTO cliente (nome, cpf) VALUES
+('João Silva', '12345678900'),
+('Maria Oliveira', '98765432100'),
+('Fernanda Souza', '45678912300');
+
+-- Inserir vendas
+INSERT INTO venda (cliente_id, jogo_id, funcionario_id) VALUES
+(1, 1, 1),
+(2, 2, 2),
+(3, 3, 3),
+(1, 4, 2),
+(2, 5, 1);`,
+
+            query: `-- Consultas
+SELECT * FROM categoria;
+SELECT nome, categoria_id FROM jogo;
+SELECT * FROM funcionario;
+SELECT * FROM venda;`
+        };
+
+        comandos.tudo = comandos.estrutura + "\n\n" + comandos.insercao + "\n\n" + comandos.query;
+
+        function filtrarComandos() {
+            const valor = document.getElementById("filtro").value;
+            terminal.textContent = comandos[valor];
+        }
+
+        window.onload = filtrarComandos;
+    </script>
+</body>
+
+</html>

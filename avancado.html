@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comandos SQL Avançados</title>
+    <style>
+        body {
+            background-color: #0d0d0d;
+            color: #33ff33;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+            transition: background 0.5s ease;
+        }
+
+        h1 {
+            text-align: center;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        .terminal {
+            background-color: #111;
+            border: 1px solid #0f0;
+            border-radius: 8px;
+            padding: 20px;
+            white-space: pre-wrap;
+            box-shadow: 0 0 10px #0f0;
+            margin-bottom: 20px;
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .comentario {
+            color: #00bfff;
+            font-style: italic;
+        }
+
+        .btn-show {
+            display: block;
+            margin: 10px auto;
+            padding: 10px 20px;
+            background-color: #00ff00;
+            color: #000;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 0 5px #0f0;
+            transition: transform 0.2s, background-color 0.3s ease;
+        }
+
+        .btn-show:hover {
+            transform: scale(1.05);
+            background-color: #55ff55;
+        }
+
+        .highlight {
+            animation: blink 0.4s ease-in-out 2;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                background-color: #0f0;
+                color: #000;
+            }
+
+            50% {
+                background-color: #000;
+                color: #0f0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>⚙️ Comandos SQL Avançados</h1>
+
+    <button class="btn-show" onclick="toggle('selects')">Ver SELECTs</button>
+    <div class="terminal" id="selects">
+        <span class="comentario">-- Selecionar jogos com estoque menor que 10</span>
+        SELECT * FROM jogo WHERE qtd < 10 ; <span class="comentario">-- Selecionar funcionários com nome Ana</span>
+            SELECT * FROM funcionario WHERE nome = 'Ana Paula';
+
+            <span class="comentario">-- Selecionar vendas feitas pelo funcionário com ID 1</span>
+            SELECT * FROM venda WHERE funcionario_id = 1;
+
+            <span class="comentario">-- Selecionar clientes com CPF específico</span>
+            SELECT * FROM cliente WHERE cpf = '12345678900';
+
+            <span class="comentario">-- Selecionar todos os clientes com ID maior que 1</span>
+            SELECT * FROM cliente WHERE id > 1;
+    </div>
+
+    <button class="btn-show" onclick="toggle('updates')">Ver UPDATEs</button>
+    <div class="terminal" id="updates">
+        <span class="comentario">-- Atualizar a quantidade de um jogo</span>
+        UPDATE jogo SET qtd = 20 WHERE nome = 'Portal 2';
+
+        <span class="comentario">-- Atualizar o nome de um cliente</span>
+        UPDATE cliente SET nome = 'João Pedro Silva' WHERE id = 1;
+
+        <span class="comentario">-- Atualizar o telefone de um funcionário</span>
+        UPDATE funcionario SET telefone = '+55(11)90000-0000' WHERE nome = 'Carlos Mendes';
+
+        <span class="comentario">-- Atualizar o nome de uma categoria</span>
+        UPDATE categoria SET nome = 'Ação e Aventura' WHERE id = 2;
+    </div>
+
+    <button class="btn-show" onclick="toggle('deletes')">Ver DELETEs</button>
+    <div class="terminal" id="deletes">
+        <span class="comentario">-- Excluir uma venda específica</span>
+        DELETE FROM venda WHERE id = 3;
+
+        <span class="comentario">-- Excluir todos os jogos com estoque zerado</span>
+        DELETE FROM jogo WHERE qtd = 0;
+
+        <span class="comentario">-- Excluir cliente com CPF específico</span>
+        DELETE FROM cliente WHERE cpf = '45678912300';
+
+        <span class="comentario">-- Excluir funcionário pelo ID</span>
+        DELETE FROM funcionario WHERE id = 2;
+
+        <span class="comentario">-- Excluir todos os funcionários com nome 'João'</span>
+        DELETE FROM funcionario WHERE nome = 'João';
+    </div>
+
+    <script>
+        function toggle(id) {
+            const el = document.getElementById(id);
+            if (el.style.display === 'none' || el.style.display === '') {
+                el.style.display = 'block';
+                el.classList.add('highlight');
+                setTimeout(() => {
+                    el.style.transition = 'all 0.5s ease';
+                    el.style.opacity = 1;
+                    el.style.transform = 'translateY(0)';
+                    el.classList.remove('highlight');
+                }, 10);
+            } else {
+                el.style.opacity = 0;
+                el.style.transform = 'translateY(20px)';
+                setTimeout(() => el.style.display = 'none', 400);
+            }
+        }
+    </script>
+</body>
+
+</html>

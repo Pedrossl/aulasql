@@ -1,0 +1,246 @@
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados de SELECT</title>
+    <style>
+        body {
+            background-color: #0d0d0d;
+            color: #33ff33;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        .tabela {
+            background-color: #111;
+            border: 1px solid #0f0;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 10px #0f0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th,
+        td {
+            border: 1px solid #0f0;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #003300;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>📋 Resultados de SELECT</h1>
+
+    <div class="tabela">
+        <h2>categoria</h2>
+        <table>
+            <tr>
+                <th>id</th>
+                <th>nome</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Terror</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Ação</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Aventura</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Estratégia</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>RPG</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>Puzzle</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>MOBA</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="tabela">
+        <h2>jogo</h2>
+        <table>
+            <tr>
+                <th>id</th>
+                <th>nome</th>
+                <th>qtd</th>
+                <th>categoria_id</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Bloodborne</td>
+                <td>8</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>God of War</td>
+                <td>12</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Zelda: Breath of the Wild</td>
+                <td>7</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Civilization VI</td>
+                <td>5</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>Elden Ring</td>
+                <td>10</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>Portal 2</td>
+                <td>6</td>
+                <td>6</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>League of Legends</td>
+                <td>15</td>
+                <td>7</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="tabela">
+        <h2>funcionario</h2>
+        <table>
+            <tr>
+                <th>id</th>
+                <th>nome</th>
+                <th>telefone</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Carlos Mendes</td>
+                <td>+55(11)91234-5678</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Ana Paula</td>
+                <td>+55(21)99876-5432</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Rodrigo Lima</td>
+                <td>+55(31)98765-4321</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="tabela">
+        <h2>cliente</h2>
+        <table>
+            <tr>
+                <th>id</th>
+                <th>nome</th>
+                <th>cpf</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>João Silva</td>
+                <td>12345678900</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Maria Oliveira</td>
+                <td>98765432100</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Fernanda Souza</td>
+                <td>45678912300</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="tabela">
+        <h2>venda</h2>
+        <table>
+            <tr>
+                <th>id</th>
+                <th>cliente_id</th>
+                <th>jogo_id</th>
+                <th>funcionario_id</th>
+                <th>qtd</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>2</td>
+                <td>2</td>
+                <td>2</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>3</td>
+                <td>3</td>
+                <td>3</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>1</td>
+                <td>4</td>
+                <td>2</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>2</td>
+                <td>5</td>
+                <td>1</td>
+                <td>1</td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+
+</html>

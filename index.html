@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SQL Explicado - Loja de Jogos</title>
+    <style>
+        body {
+            background-color: #0d0d0d;
+            color: #33ff33;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        nav {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        nav a {
+            color: #00ffff;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0 15px;
+        }
+
+        nav a:hover {
+            text-shadow: 0 0 5px #00ffff;
+        }
+
+        .terminal {
+            background-color: #111;
+            border: 1px solid #0f0;
+            border-radius: 8px;
+            padding: 20px;
+            white-space: pre-wrap;
+            box-shadow: 0 0 10px #0f0;
+        }
+
+        .comentario {
+            color: #00bfff;
+            font-style: italic;
+        }
+
+        .linha-comentada {
+            color: #33ff33;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>💾 Script SQL - Loja de Jogos</h1>
+    <nav>
+        <a href="./filtros.html">Dados separados</a>
+        <a href="./resultados.html">Resultados das tabelas</a>
+        <a href="./avancado.html">Avancado</a>
+    </nav>
+    <div class="terminal">
+        <span class="comentario">-- Acessar o MySQL como root</span>
+        mysql -u root -p
+
+        <span class="comentario">-- Criar o banco de dados caso não exista</span>
+        CREATE DATABASE IF NOT EXISTS jogos_bons;
+
+        <span class="comentario">-- Selecionar o banco para uso</span>
+        USE jogos_bons;
+
+        <span class="comentario">-- Criar tabela de categorias de jogos</span>
+        CREATE TABLE IF NOT EXISTS categoria (
+        id INT PRIMARY KEY AUTO_INCREMENT, <span class="comentario">-- identificador único da categoria</span>
+        nome VARCHAR(45) NOT NULL <span class="comentario">-- nome da categoria</span>
+        );
+
+        <span class="comentario">-- Criar tabela de jogos, vinculando à categoria</span>
+        CREATE TABLE IF NOT EXISTS jogo (
+        id INT PRIMARY KEY AUTO_INCREMENT, <span class="comentario">-- identificador único do jogo</span>
+        nome VARCHAR(45) NOT NULL, <span class="comentario">-- nome do jogo</span>
+        qtd INT NOT NULL, <span class="comentario">-- quantidade em estoque</span>
+        categoria_id INT NOT NULL, <span class="comentario">-- chave estrangeira da categoria</span>
+        FOREIGN KEY (categoria_id) REFERENCES categoria(id) <span class="comentario">-- vínculo com a tabela
+            categoria</span>
+        );
+
+        <span class="comentario">-- Criar tabela de funcionários</span>
+        CREATE TABLE IF NOT EXISTS funcionario (
+        id INT PRIMARY KEY AUTO_INCREMENT, <span class="comentario">-- identificador único do funcionário</span>
+        nome VARCHAR(40) NOT NULL, <span class="comentario">-- nome do funcionário</span>
+        telefone VARCHAR(20) NOT NULL UNIQUE <span class="comentario">-- telefone único</span>
+        );
+
+        <span class="comentario">-- Criar tabela de clientes</span>
+        CREATE TABLE IF NOT EXISTS cliente (
+        id INT PRIMARY KEY AUTO_INCREMENT, <span class="comentario">-- identificador único do cliente</span>
+        nome VARCHAR(40) NOT NULL, <span class="comentario">-- nome do cliente</span>
+        cpf VARCHAR(20) NOT NULL UNIQUE <span class="comentario">-- CPF único do cliente</span>
+        );
+
+        <span class="comentario">-- Criar tabela de vendas relacionando cliente, jogo e funcionário</span>
+        CREATE TABLE IF NOT EXISTS venda (
+        id INT PRIMARY KEY AUTO_INCREMENT, <span class="comentario">-- identificador único da venda</span>
+        cliente_id INT NOT NULL, <span class="comentario">-- FK do cliente que comprou</span>
+        jogo_id INT NOT NULL, <span class="comentario">-- FK do jogo vendido</span>
+        funcionario_id INT NOT NULL, <span class="comentario">-- FK do funcionário responsável</span>
+        qtd INT DEFAULT 1, <span class="comentario">-- quantidade vendida</span>
+        FOREIGN KEY (cliente_id) REFERENCES cliente(id),
+        FOREIGN KEY (jogo_id) REFERENCES jogo(id),
+        FOREIGN KEY (funcionario_id) REFERENCES funcionario(id)
+        );
+
+        <span class="comentario">-- Inserir categorias</span>
+        INSERT INTO categoria (nome) VALUES ('Terror'), ('Ação'), ('Aventura'), ('Estratégia'), ('RPG'), ('Puzzle'),
+        ('MOBA');
+
+        <span class="comentario">-- Inserir jogos</span>
+        INSERT INTO jogo (nome, qtd, categoria_id) VALUES
+        ('Bloodborne', 8, 1), <span class="comentario">-- jogo da categoria Terror</span>
+        ('God of War', 12, 2), <span class="comentario">-- Ação</span>
+        ('Zelda: Breath of the Wild', 7, 3), <span class="comentario">-- Aventura</span>
+        ('Civilization VI', 5, 4), <span class="comentario">-- Estratégia</span>
+        ('Elden Ring', 10, 5), <span class="comentario">-- RPG</span>
+        ('Portal 2', 6, 6), <span class="comentario">-- Puzzle</span>
+        ('League of Legends', 15, 7); <span class="comentario">-- MOBA</span>
+
+        <span class="comentario">-- Inserir funcionários</span>
+        INSERT INTO funcionario (nome, telefone) VALUES
+        ('Carlos Mendes', '+55(11)91234-5678'),
+        ('Ana Paula', '+55(21)99876-5432'),
+        ('Rodrigo Lima', '+55(31)98765-4321');
+
+        <span class="comentario">-- Inserir clientes</span>
+        INSERT INTO cliente (nome, cpf) VALUES
+        ('João Silva', '12345678900'),
+        ('Maria Oliveira', '98765432100'),
+        ('Fernanda Souza', '45678912300');
+
+        <span class="comentario">-- Inserir vendas (ligando cliente, jogo e funcionário)</span>
+        INSERT INTO venda (cliente_id, jogo_id, funcionario_id) VALUES
+        (1, 1, 1), <span class="comentario">-- João comprou Bloodborne com Carlos</span>
+        (2, 2, 2), <span class="comentario">-- Maria comprou God of War com Ana</span>
+        (3, 3, 3), <span class="comentario">-- Fernanda comprou Zelda com Rodrigo</span>
+        (1, 4, 2), <span class="comentario">-- João comprou Civilization com Ana</span>
+        (2, 5, 1); <span class="comentario">-- Maria comprou Elden Ring com Carlos</span>
+
+        <span class="comentario">-- Mostrar todas as tabelas do banco</span>
+        SHOW TABLES;
+
+        <span class="comentario">-- Consultas</span>
+        SELECT * FROM categoria; <span class="comentario">-- lista todas as categorias</span>
+        SELECT nome, categoria_id FROM jogo; <span class="comentario">-- lista nome e categoria dos jogos</span>
+        SELECT * FROM funcionario; <span class="comentario">-- lista os funcionários</span>
+        SELECT * FROM venda; <span class="comentario">-- lista todas as vendas</span>
+    </div>
+</body>
+
+</html>
